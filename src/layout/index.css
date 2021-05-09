@@ -1,0 +1,13 @@
+.layoutWrapper{
+  display: flex;
+  height: 100%;
+}
+.layout-siderBar{
+  width: 220px;
+  height: 100%;
+}
+.app-main{
+  width: calc(100% - 220px);
+  height: 100%;
+  padding: 10px;
+}
