@@ -4,6 +4,7 @@ import AnTdDialog from "@/components/AnTdDialog"
 import {Button} from "antd"
 import { PlusOutlined } from '@ant-design/icons';
 import AForm from "./AForm"
+import "./index.css"
 export default function AnTdTableForm(props){
   const {columns,tableConfig,dialogConfig,pagination,dataSource} = props
   const childRef = useRef();

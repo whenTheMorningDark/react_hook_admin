@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react"
 import {Table} from "antd"
 import { Button } from 'antd';
+import "./index.css"
 export default function ATable(props){
   const {columns,dataSource,tableConfig,pagination} = props
   let [columnsData,setColumnsData] = useState([])
@@ -18,6 +19,7 @@ export default function ATable(props){
     let arr = [...columns,...[{
       title: '操作',
       key: 'action',
+      width:200,
       render: (text, record) => (
         <>
           <Button size="small" onClick={(e)=>{editFun(record)}} type="primary">编辑</Button>

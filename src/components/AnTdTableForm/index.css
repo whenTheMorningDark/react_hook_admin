@@ -1,0 +1,9 @@
+.AnTdTableForm{
+  height: calc(100% - 50px);
+}
+.ant-table-wrapper,.ant-spin-nested-loading,.ant-spin-container{
+  height: 100%;
+}
+.ant-table{
+  height: calc(100% - 50px);
+}

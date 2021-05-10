@@ -59,6 +59,8 @@ export default class Hotel extends React.Component {
           title: '地点',
           key: 'areaValue',
           dataIndex: 'areaValue',
+          align:"center",
+          width:200,
           render: tags => (
             <>
               {this.changeLabel(tags)}
@@ -79,21 +81,20 @@ export default class Hotel extends React.Component {
       },
       tableConfig:{
         bordered:true,
-        rowKey:"id"
+        rowKey:"id",
+        size:"middle"
       },
       data:[],
       optionsData:[],
       pagination: {
         current: 1,
-        pageSize: 10
+        pageSize: 10,
       }
     }
   }
   // 更新民宿列表数据
   upDateRow = async (row)=>{
-    console.log(row)
     let result = await updateHotList(row)
-    console.log(result)
     if(result.code === 0){
       message.success({
         content:"修改成功!"
@@ -110,18 +111,27 @@ export default class Hotel extends React.Component {
       message.success({
         content:"新增成功!"
       })
-      this.getTableData()
+      let {total,...rest} = this.state.pagination
+      let resultData = await getHotDataList(rest)
+      let tableData = resultData.data.data
+      this.setState({
+        data:tableData
+      })
+      this.setState({
+        pagination:{
+          ...this.state.pagination,
+          total:resultData.data.total
+        }
+      })
     } else {
       message.info({
         content:"新增失败!"
       })
     }
-    console.log(resData)
   }
   // 删除民宿列表
   delFun = async (data)=>{
     let resData = await delHotList({id:data.id})
-    console.log(resData)
     if(resData.data){
       message.success({
         content:"删除成功!"
@@ -150,7 +160,6 @@ export default class Hotel extends React.Component {
           }
         })
       }
-      console.log(this.state.pagination)
     }
   }
   // 分页切换
