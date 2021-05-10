@@ -25,6 +25,15 @@ export function delHotList(data) {
   })
 }
 
+// 更新民宿数据
+export function updateHotList(data) {
+  return request({
+    url: '/api/travals/updateHotList',
+    method: 'post',
+    data
+  })
+}
+
 export function getAreaMap(params) {
   return request({
     url: '/api/map/mapList',

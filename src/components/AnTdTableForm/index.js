@@ -54,6 +54,9 @@ export default function AnTdTableForm(props){
       let data = await formRef.current.valaditor()
       if(data.status){
         cancel()
+        console.log(data.values)
+        let targetUser = {...user,...data.values}
+        props.upDateRow(targetUser)
       }
     });
   }

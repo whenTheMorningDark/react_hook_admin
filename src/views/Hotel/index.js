@@ -1,7 +1,7 @@
 import React from "react"
 import { message } from 'antd';
 import "./index.css"
-import {getHotDataList,getAreaMap,addHotList,delHotList} from "@/api/travals"
+import {getHotDataList,getAreaMap,addHotList,delHotList,updateHotList} from "@/api/travals"
 // import * as dayjs from 'dayjs'
 // import {columns} from "./data/tableData"
 import AnTdTableForm from "@/components/AnTdTableForm"
@@ -89,6 +89,17 @@ export default class Hotel extends React.Component {
       }
     }
   }
+  // 更新民宿列表数据
+  upDateRow = async (row)=>{
+    console.log(row)
+    let result = await updateHotList(row)
+    console.log(result)
+    if(result.code === 0){
+      message.success({
+        content:"修改成功!"
+      })
+    }
+  }
   // 新增民宿列表数据
    addTable = async (data)=>{
     console.log(data)
@@ -115,6 +126,31 @@ export default class Hotel extends React.Component {
       message.success({
         content:"删除成功!"
       })
+      this.setState({
+        data:this.state.data.filter(v=>v.id !== data.id)
+      })
+      this.setState({
+        pagination:{
+          ...this.state.pagination,
+          total:this.state.pagination.total>0?this.state.pagination.total - 1:0,
+          current:this.state.data.length === 0 && this.state.pagination.current>1?this.state.pagination.current - 1:this.state.pagination.current
+        }
+      })
+      if(this.state.data.length === 0){
+        let {total,...rest} = this.state.pagination
+        let resData = await getHotDataList(rest)
+        let tableData = resData.data.data
+        this.setState({
+          data:tableData
+        })
+        this.setState({
+          pagination:{
+            ...this.state.pagination,
+            total:resData.data.total
+          }
+        })
+      }
+      console.log(this.state.pagination)
     }
   }
   // 分页切换
@@ -185,6 +221,7 @@ export default class Hotel extends React.Component {
           addTable={this.addTable}
           handleTableChange = {this.handleTableChange}
           delFun={this.delFun}
+          upDateRow={this.upDateRow}
         />:null
         }
         
